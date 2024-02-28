@@ -28,8 +28,11 @@ public class CodingController
         var startTime = userInput.GetDateInput();
         var endTime = userInput.GetDateInput();
         using var connection = new SqliteConnection(ConnectionString);
-        var startSession = connection.Execute($"INSERT INTO coding_tracker(StartTime, EndTime) VALUES('{startTime}','{endTime}')");
-        Console.WriteLine($"Affected Rows: {startSession}");
+        var command = "INSERT INTO coding_tracker(StartTime, EndTime) VALUES(@StartTime, @EndTime)";
+        var startSession = new { StartTime = startTime, EndTime = endTime };
+        var rowsAffected = connection.Execute(command, startSession);
+        Console.WriteLine($"{rowsAffected} row(s) inserted.");
+        
     }
 
     public void GetAllRecords()
