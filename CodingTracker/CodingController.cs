@@ -25,8 +25,8 @@ public class CodingController
     public void Session()
     {
         var userInput = new UserInput();
-        var startTime = userInput.GetDateInput();
-        var endTime = userInput.GetDateInput();
+        var startTime = userInput.GetDateInput("Please insert the date and time for your start time: (Format dd-mm-yy HH:mm) Type 0 to return to the main menu");
+        var endTime = userInput.GetDateInput("Please insert the date and time for your end time: (Format dd-mm-yy HH:mm) Type 0 to return to the main menu");
         using var connection = new SqliteConnection(ConnectionString);
         var command = "INSERT INTO coding_tracker(StartTime, EndTime) VALUES(@StartTime, @EndTime)";
         var startSession = new { StartTime = startTime, EndTime = endTime };

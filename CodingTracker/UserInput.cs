@@ -46,9 +46,9 @@ public class UserInput
         } while (appRunning);
     }
 
-    public string? GetDateInput()
+    public string? GetDateInput(string? message)
     {
-        Console.WriteLine("Please insert the date and time: (Format dd-mm-yy HH:mm) Type 0 to return to the main menu");
+        Console.WriteLine(message);
         var dateInput = Console.ReadLine();
         if (dateInput == "0") GetUserInput();
 
