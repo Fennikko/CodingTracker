@@ -52,7 +52,7 @@ public class UserInput
         var dateInput = Console.ReadLine();
         if (dateInput == "0") GetUserInput();
 
-        while (!DateTime.TryParseExact(dateInput, "dd-MM-yy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+        while (!DateTime.TryParseExact(dateInput, "dd-MM-yy HH:mm", new CultureInfo("en-US"), DateTimeStyles.None, out _))
         {
             Console.WriteLine("Invalid Date. (Format dd-mm-yy HH:mm) Type 0 to return to the main menu");
             dateInput = Console.ReadLine();
