@@ -32,30 +32,16 @@ public class CodingController
         Console.WriteLine($"Affected Rows: {startSession}");
     }
 
-    public List<CodingSession> SessionRecords()
-    {
-        using var connection = new SqliteConnection(ConnectionString);
-        var reader = connection.ExecuteReader("SELECT * FROM coding_tracker");
-        List<CodingSession> tableData = new();
-        while (reader.Read())
-        {
-            tableData.Add(
-                new CodingSession
-                {
-                    Id = reader.GetInt32(0),
-                    StartTime = DateTime.ParseExact(reader.GetString(1),"dd-MM-yy HH:mm", new CultureInfo("en-US")),
-                    EndTime = DateTime.ParseExact(reader.GetString(2),"dd-MM-yy HH:mm", new CultureInfo("en-US"))
-                });
-        }
-        return tableData;
-    }
-
     public void GetAllRecords()
     {
-        var tableData = SessionRecords();
-        foreach (var session in tableData)
+
+        using var connection = new SqliteConnection(ConnectionString);
+        var sql = "SELECT * FROM coding_tracker";
+        var codingSessions = connection.Query<CodingSession>(sql);
+
+        foreach (var session in codingSessions)
         {
-            Console.WriteLine($"Id: {session.Id} Start Time: {session.StartTime:dd-MMM-yyyy HH:mm} End Time: {session.EndTime:dd-MMM-yyyy HH:mm}");
+            Console.WriteLine($"ID: {session.Id} {session.StartTime} {session.EndTime}");
         }
     }
 

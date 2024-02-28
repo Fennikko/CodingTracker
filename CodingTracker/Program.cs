@@ -6,5 +6,5 @@ using System.Collections.Specialized;
 
 var controller = new CodingController();
 controller.DatabaseCreation();
-controller.Session();
+//controller.Session();
 controller.GetAllRecords();
