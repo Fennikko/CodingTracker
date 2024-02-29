@@ -1,10 +1,7 @@
-﻿using Dapper;
-using System.Configuration;
-using System.Collections.Specialized;
+﻿using CodingTracker;
 
-//var connectionString = ConfigurationManager.AppSettings.Get("connectionString") + ConfigurationManager.AppSettings.Get("databasePath");
 
-var controller = new CodingController();
-controller.DatabaseCreation();
-controller.Session();
-controller.GetAllRecords();
+//CodingController.DatabaseCreation();
+//CodingController.Session();
+//CodingController.GetAllSessions();
+UserInput.SpectreGetUserInput();
