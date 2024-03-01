@@ -7,15 +7,20 @@ public class Validation
 {
     public static string GetDateInput(string message1, string message2, string message3)
     {
-        //Console.WriteLine(message);
-        //var dateInput = Console.ReadLine();
-        var dateInput = AnsiConsole.Ask<string>($"{message1}[green]{message2}[/]{message3}");
+        var dateInput = AnsiConsole.Prompt(
+            new TextPrompt<string>($"{message1}[green]{message2}[/]{message3}: ")
+                .PromptStyle("blue")
+                .AllowEmpty());
+
         if (dateInput == "0") UserInput.SpectreGetUserInput();
 
         while (!DateTime.TryParseExact(dateInput, "dd-MM-yy HH:mm", new CultureInfo("en-US"), DateTimeStyles.None, out _))
         {
-            Console.WriteLine("Invalid Date. (Format dd-mm-yy HH:mm) Type 0 to return to the main menu");
-            dateInput = Console.ReadLine();
+            dateInput = AnsiConsole.Prompt(
+                new TextPrompt<string>("[red]Invalid format. Use the following: [/][green](Format dd-mm-yy HH:mm): [/]")
+                    .PromptStyle("blue")
+                    .AllowEmpty());
+            if (dateInput == "0") UserInput.SpectreGetUserInput();
         }
 
         return dateInput;

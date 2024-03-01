@@ -2,6 +2,7 @@
 using System.Globalization;
 using Dapper;
 using Microsoft.Data.Sqlite;
+using Spectre.Console;
 
 namespace CodingTracker;
 
@@ -27,8 +28,9 @@ public class CodingController
 
     public static void Session()
     {
+        AnsiConsole.Clear();
         var startTime = Validation.GetDateInput("Please insert the date and time for your start time:", "(Format dd-mm-yy HH:mm)", "Type 0 to return to the main menu");
-        var endTime = Validation.GetDateInput("Please insert the date and time for your start time:", "(Format dd-mm-yy HH:mm)", "Type 0 to return to the main menu");
+        var endTime = Validation.GetDateInput("Please insert the date and time for your end time:", "(Format dd-mm-yy HH:mm)", "Type 0 to return to the main menu");
         var startDateTime = DateTime.ParseExact(startTime, "dd-MM-yy HH:mm", new CultureInfo("en-US"));
         var endDateTime = DateTime.ParseExact(endTime, "dd-MM-yy HH:mm", new CultureInfo("en-US"));
         while (startDateTime >= endDateTime)
@@ -47,6 +49,7 @@ public class CodingController
 
     public static void GetAllSessions()
     {
+        AnsiConsole.Clear();
         var sql = "SELECT * FROM coding_tracker";
         using var connection = new SqliteConnection(ConnectionString);
         var codingSessions = connection.Query<CodingSession>(sql);
@@ -55,6 +58,22 @@ public class CodingController
         {
             Console.WriteLine($"ID: {session.Id} Start Time: {session.StartTime} End Time: {session.EndTime} Duration: {session.Duration}");
         }
+    }
+
+    public static void TableTest()
+    {
+        AnsiConsole.Clear();
+        var table = new Table();
+
+
+        table.Title(new TableTitle("[blue]Coding Sessions[/]"));
+
+        table.AddColumn(new TableColumn("[#FFA500]Id[/]").Centered());
+        table.AddColumn(new TableColumn("[#104E1D]Start Time[/]").Centered());
+        table.AddColumn(new TableColumn("[red]End Time[/]").Centered());
+        table.AddColumn(new TableColumn("[#8F00FF]Duration[/]").Centered());
+
+        AnsiConsole.Write(table);
     }
 
 
